@@ -17,6 +17,7 @@ namespace NordNetApiPoC.NordNetAPI
         public static string BASE_URL = "https://api.test.nordnet.se/next";
         public static string VERSION = "1";
     }
+    
     class HttpMethods
     {
         public const string POST = "POST";
@@ -56,7 +57,7 @@ namespace NordNetApiPoC.NordNetAPI
             return data.ToString(); ;
         }
 
-        public static WebResponse SendRequest(string method, string requestPath, string actionParameter, Dictionary<string, string> parameters, string auth)
+        public static WebResponse SendRequest(HttpMethods method, string requestPath, string actionParameter, Dictionary<string, string> parameters, string auth)
         {
             if (parameters == null)
                 return SendRequest(method, requestPath + "/" + actionParameter, parameters, auth);

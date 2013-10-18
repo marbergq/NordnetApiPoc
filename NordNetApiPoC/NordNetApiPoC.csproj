@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="NordNetAPI\AbstractRequests\AbstractRequestClass.cs" />
     <Compile Include="NordNetAPI\DataContracts\DataContracts.cs" />
+    <Compile Include="NordNetAPI\LoginClass.cs" />
     <Compile Include="NordNetAPI\LoginModule\Login.cs" />
     <Compile Include="NordNetAPI\AbstractRequests\News\NewsInfo.cs" />
     <Compile Include="NordNetAPI\RequestUtil.cs" />

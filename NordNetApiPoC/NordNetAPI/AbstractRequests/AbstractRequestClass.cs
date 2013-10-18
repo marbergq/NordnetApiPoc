@@ -16,7 +16,7 @@ namespace NordNetApiPoC.NordNetAPI.AbstractRequests
 
   
 
-    abstract class AbstractRequestClass 
+     public abstract class AbstractRequestClass 
     {
 
         public string SessionKey { protected get; set; }

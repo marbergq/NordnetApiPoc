@@ -17,51 +17,69 @@ using NordNetApiPoC.NordNetAPI.News;
 
 namespace nExt_login
 {
+    enum ACTION 
+    { 
+        LISTSTOCKS = 0,
+        LIST_MARKETS = 1, 
+        LIST_NEWS = 2
+    }
     class Program
     {
+        static NordNetApiPoC.NordNetAPI.LoginModule.Login login;
         /// <summary>
         /// Just a console printout to prove the case, not to be used
         /// </summary>
         /// <param name="arg"></param>
         public static void Main(string[] arg)
         {
-            var login = new NordNetApiPoC.NordNetAPI.LoginModule.Login();
-            login.UserName = "username";
-            login.PassWord = "password";
-
-            var result = login.PreformLogin();
-            //if logged in
-            if (result)
+            if (login == null)
             {
+                login = new NordNetApiPoC.NordNetAPI.LoginModule.Login();
+
+                login.UserName = "marbergq";
+                login.PassWord = "skateboard1";
+
+                var result = login.PreformLogin();
+                //if logged in
+                if (result)
+                {
 
 
-                //Non working feed, for hte momente :)
-                //using (var socketfeed = new StreamReader(FeedHandler.ConnectPrivateFeed(login)))
-                //{
+                    //Non working feed, for hte momente :)
+                    //using (var socketfeed = new StreamReader(FeedHandler.ConnectPrivateFeed(login)))
+                    //{
 
-                //    for (int i = 0; i < 10; i++)
-                //    {
-                //        var feedLoginResult = socketfeed.ReadLine();
-                //        Console.WriteLine(feedLoginResult);
-                //    }
-                //}
+                    //    for (int i = 0; i < 10; i++)
+                    //    {
+                    //        var feedLoginResult = socketfeed.ReadLine();
+                    //        Console.WriteLine(feedLoginResult);
+                    //    }
+                    //}
+                    if(!string.IsNullOrEmpty(arg[0]))
+                    switch (int.Parse(arg[0]))
+                    {
+                        case (int)ACTION.LIST_MARKETS:
+                            PrintAllStocksInfo(login);
+                            break;
+                        case (int)ACTION.LIST_NEWS:
+                            PrintNewsSources(login);
+                            break;
+                        case (int)ACTION.LISTSTOCKS: 
+                            PrintNews(login);
+                            break;
+                    }
 
 
-                //PrintAllStocksInfo(login);
-                //PrintNewsSources(login);
-                //PrintNews(login);
+                    //Stocks
+                    //if (result)
+                    //{
 
-                
+                    //        Console.WriteLine(" ");
+                    Console.WriteLine("Yey!");
 
-                //Stocks
-                //if (result)
-                //{
-               
-                //        Console.WriteLine(" ");
-                Console.WriteLine("Yey!");
-
+                }
             }
-            Console.ReadLine();
+           Main( new[]{Console.ReadLine()});
         
         }
 

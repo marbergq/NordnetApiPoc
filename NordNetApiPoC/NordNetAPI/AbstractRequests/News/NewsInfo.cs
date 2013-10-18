@@ -8,7 +8,7 @@ using NordNetApiPoC.NordNetAPI.DataContracts;
 using NordNetApiPoC.NordNetAPI.AbstractRequests;
 namespace NordNetApiPoC.NordNetAPI.News
 {
-    class NewsInfo : AbstractRequestClass
+    public class NewsInfo : AbstractRequestClass
     {
 
         /// <summary>
@@ -18,7 +18,7 @@ namespace NordNetApiPoC.NordNetAPI.News
         /// <returns></returns>
         public IEnumerable<NewsSource> getAllNewsSources
         {
-            get
+            public get
             {
                 return MakeRequest<IEnumerable<NewsSource>>(HttpMethods.GET, "news_sources") ?? new List<NewsSource>() ;
             }

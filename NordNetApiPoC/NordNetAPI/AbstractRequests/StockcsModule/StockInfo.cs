@@ -8,7 +8,7 @@ using NordNetApiPoC.NordNetAPI.DataContracts;
 using NordNetApiPoC.NordNetAPI.AbstractRequests;
 namespace NordNetApiPoC.NordNetAPI.StockcsModule
 {
-    class Instruments : AbstractRequestClass
+    public class Instruments : AbstractRequestClass
     {
         /// <summary>
         /// Geven a stock, gets the instrument information
@@ -42,7 +42,7 @@ namespace NordNetApiPoC.NordNetAPI.StockcsModule
 
     }
 
-    class StockInfo : AbstractRequestClass
+  public  class StockInfo : AbstractRequestClass
     {
         /// <summary>
         /// Gets All markets available on Nordnet

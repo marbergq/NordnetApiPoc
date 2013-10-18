@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace NordnetPoC
 {
+    
     class Program
     {
         private static readonly string LoginUrl = "https://www.nordnetdirekt.se/mux/inloggad/lib/login.html";
@@ -19,6 +20,9 @@ namespace NordnetPoC
         /// Just to prove the login and listing of your account, not to be used :)
         /// </summary>
         /// <param name="args"></param>
+        /// 
+
+
         static void Main(string[] args)
         {
 

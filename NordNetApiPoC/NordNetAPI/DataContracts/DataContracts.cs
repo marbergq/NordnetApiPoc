@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 namespace NordNetApiPoC.NordNetAPI.DataContracts
 {
 
+    
+
     [DataContract]
     public class LoginDataContract
     {
@@ -39,7 +41,7 @@ namespace NordNetApiPoC.NordNetAPI.DataContracts
 
 
     [DataContract]
-    class Stock
+    public class Stock
     {
         [DataMember(Name = "shortname")]
         public string ShortName { get; set; }
@@ -51,15 +53,15 @@ namespace NordNetApiPoC.NordNetAPI.DataContracts
     }
 
     [DataContract]
-    class HeartBeat
-    { 
+    public class HeartBeat
+    {
         [DataMember(Name = "logged-in")]
         public Boolean LoggedIn { get; set; }
     }
 
     [DataContract]
-    class Instrument : Stock
-    { 
+    public class Instrument : Stock
+    {
         [DataMember(Name = "type")]
         public string Type { get; set; }
         [DataMember(Name = "country")]
@@ -70,12 +72,12 @@ namespace NordNetApiPoC.NordNetAPI.DataContracts
         public string IsinCode { get; set; }
         [DataMember(Name = "longname")]
         public string LongName { get; set; }
-    
-    
+
+
     }
 
     [DataContract]
-    class ChartData
+    public class ChartData
     {
         [DataMember(Name = "timestamp")]
         public string TimeStamp { get; set; }
@@ -88,7 +90,7 @@ namespace NordNetApiPoC.NordNetAPI.DataContracts
     }
 
     [DataContract]
-    class Market
+    public class Market
     {
         [DataMember(Name = "country")]
         public string Country { get; set; }
@@ -101,7 +103,7 @@ namespace NordNetApiPoC.NordNetAPI.DataContracts
     }
 
     [DataContract]
-    class NewsSource
+    public class NewsSource
     {
         [DataMember(Name = "name")]
         public string Name { get; set; }
@@ -123,24 +125,103 @@ namespace NordNetApiPoC.NordNetAPI.DataContracts
     }
 
     [DataContract]
-    class Country
+    public class Country
     {
         [DataMember(Name = "country")]
         public string CountryCode { get; set; }
     }
 
     [DataContract]
-    class NewsItem
+    public class NewsItem
     {
-           [DataMember(Name = "datetime")]
+        [DataMember(Name = "datetime")]
         public DateTime Datetime { get; set; }
-           [DataMember(Name = "headline")]
+        [DataMember(Name = "headline")]
         public string HeadLine { get; set; }
-           [DataMember(Name = "itemid")]
-        public int ItemID  { get; set; }
-           [DataMember(Name = "sourceid")]
+        [DataMember(Name = "itemid")]
+        public int ItemID { get; set; }
+        [DataMember(Name = "sourceid")]
         public int SourceId { get; set; }
-           [DataMember(Name = "type")]
+        [DataMember(Name = "type")]
         public string type { get; set; }
     }
+
+    [DataContract]
+    public class Indices
+    {
+        [DataMember(Name = "longname")]
+        public string LongName { get; set; }
+
+        [DataMember(Name = "source")]
+        public string Source { get; set; }
+
+        [DataMember(Name = "id")]
+        public string ID { get; set; }
+
+        [DataMember(Name = "type")]
+        public string type { get; set; }
+
+        [DataMember(Name = "country")]
+        public string Country { get; set; }
+
+    }
+
+    [DataContract]
+    public class Account
+    {
+        [DataMember(Name="id")]
+        public string AccountID { get; set; }
+        [DataMember(Name="default")]
+        public bool Default { get; set; }
+    }
+
+
+
+    [DataContract]
+    public class AccountInfo
+    {
+        [DataMember(Name = "accountSum")]
+        public float AccountSum { get; set; }
+        [DataMember(Name = "fullMarketValue")]
+        public float FullMarketValue { get; set; }
+        [DataMember(Name = "accountCurrency")]
+        public string AccountCurrency { get; set; }
+        [DataMember(Name = "tradingPower")]
+        public float TradingPower { get; set; }
+    }
+
+    [DataContract]
+    public class AccountPosistions
+    { 
+        [DataMember(Name="acqPrice")]
+        public float AccquirePrice { get; set; }
+        [DataMember(Name="acqPriceAcc")]
+        public float AcquirePriceInAccountCurrency { get; set; }
+        [DataMember(Name="pawnPercent")]
+        public float PawnPercent { get; set; }
+        [DataMember(Name="qt")]
+        public float Quantity { get; set; }
+        [DataMember(Name="marketValue")]
+        public float MarketValue { get; set; }
+        [DataMember(Name="marketValueAcc")]
+        public float MarketValueAccountCurrency { get; set; }
+        [DataMember(Name = "instrumentID")]
+        public AccountPositionsStock InstrumentInfo { get; set; }
+    }
+    [DataContract]
+    public class AccountPositionsStock
+    { 
+        [DataMember(Name = "mainMarketId")]
+        public int MainMarketID { get; set; }
+        [DataMember(Name = "identifier")]
+        public string Identifier { get; set; }
+        [DataMember(Name = "type")]
+        public string Type { get; set; }
+        [DataMember(Name = "currency")]
+        public string Currency { get; set; }
+        [DataMember(Name = "mainMarketPrice")]
+        public float? MainMarketPrice { get; set; }        
+        
+    }
+
 }

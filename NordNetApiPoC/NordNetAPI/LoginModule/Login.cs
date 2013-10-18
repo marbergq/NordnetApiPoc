@@ -16,6 +16,7 @@ using NordNetApiPoC.NordNetAPI.DataContracts;
 using NordNetApiPoC.NordNetAPI.StockcsModule;
 using NordNetApiPoC.NordNetAPI.News;
 using System.Threading;
+using NordNetApiPoC.NordNetAPI.AbstractRequests.Accounts;
 
 namespace NordNetApiPoC.NordNetAPI.LoginModule
 {
@@ -41,7 +42,7 @@ namespace NordNetApiPoC.NordNetAPI.LoginModule
         public void UpdateHeartBeat(Object State)
         {
             nExtRequestUtil.SendHeartBeat(Class2Update.SessionKey);
-            t.Change(0, Class2Update.SessionExpiration);
+            t.Change(0, (Class2Update.SessionExpiration/2)*1000);
         }
 
         public void Dispose()
@@ -58,7 +59,7 @@ namespace NordNetApiPoC.NordNetAPI.LoginModule
          void UpdateExpiresIn();
          void NotLoggedIn();
     }
-    class Login : SesseionExpires
+    public class Login : SesseionExpires
     {
         public string UserName { private get; set; }
         public string PassWord { private get; set; }
@@ -67,6 +68,7 @@ namespace NordNetApiPoC.NordNetAPI.LoginModule
         private LoginDataContract _UserInfo;
         private int failedLoginCount = 0;
         private HeartBeatUpdater heartBeatService { get; set; }
+        private IEnumerable<Account> MyAccount { get; set; }
 
 
 
@@ -78,6 +80,8 @@ namespace NordNetApiPoC.NordNetAPI.LoginModule
             _Stockinfo = new StockInfo { SessionKey = USERInfo.SessionKey };
             _Newsinfo = new NewsInfo { SessionKey = USERInfo.SessionKey };
             _InstrumentsInfo = new Instruments { SessionKey = _UserInfo.SessionKey };
+            _AccountInfo = new AccountRequests { SessionKey = _UserInfo.SessionKey, AccountId =  };
+            
             if (heartBeatService != null)
                 heartBeatService.Dispose();
             heartBeatService = new HeartBeatUpdater(this);
@@ -131,6 +135,23 @@ namespace NordNetApiPoC.NordNetAPI.LoginModule
                 }
                 PreformLogin();
                 return InstrumentsInfo;
+            }
+        }
+
+
+        private AccountRequests _AccountInfo;
+        public AccountRequests Accountinfo
+        {
+            get
+            { 
+                if (failedLoginCount > nExTApiInfo.MAX_FAILED_LOGINS)
+                    throw new Exception("Error with account");
+                if (DateTime.Compare(DateTime.Now, SessionExpiresInterval) < 0 || !LoggedIn)
+                {
+                    return _AccountInfo;
+                }
+                PreformLogin();
+                return Accountinfo;
             }
         }
 
