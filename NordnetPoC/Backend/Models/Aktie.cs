@@ -9,6 +9,58 @@ using System.Threading.Tasks;
 
 namespace NordnetPoC.NordNet.Models
 {
+    class NordNetStockListPage : IStockPage
+    {
+
+        public string Lista
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        private HttpClient _Client;
+        public HttpClient Client
+        {
+            get
+            {
+                return _Client;
+            }
+            set
+            {
+                _Client = value;
+            }
+        }
+
+        public IEnumerable<IStock> Stocks
+        {
+            get
+            {
+                try
+                {
+                    var client = Client;
+                    var request = client.GetStringAsync("https://www.nordnetdirekt.se/mux/inloggad/aktier/aktielista.html");
+
+                    Regex.Matches(request.Result,@"\$VAR1.*\{(.*?)?\;",RegexOptions.Multiline);
+
+                    
+                }
+                catch (Exception e)
+                { }
+                return null;
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+    }
+
     class NordNetCustomer : AbstractCustomer
     { 
         
@@ -20,6 +72,7 @@ namespace NordnetPoC.NordNet.Models
             var rows = PageToStockSource.Split(new[] { "<tr" }, StringSplitOptions.RemoveEmptyEntries).Where(s => Regex.IsMatch(s, "(class=\"even\")|(class=\"odd\")"));
             Stocks = rows.Select(s => new Aktie(s));
         }
+
 
         public override void setTodayChange(string page)
         {
