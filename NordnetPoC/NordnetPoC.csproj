@@ -32,10 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
@@ -46,13 +53,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Backend\Abstracts\AbstractsStockInfoClasses.cs" />
+    <Compile Include="Backend\Abstracts\AbstractUserInfoClasses.cs" />
     <Compile Include="Backend\Constants\URLS.cs" />
+    <Compile Include="Backend\Validator\GenericValidator.cs" />
     <Compile Include="Banks\NordNet\NordNetLogin.cs" />
+    <Compile Include="Banks\NordNet\Validation\NordNetConstants.cs" />
+    <Compile Include="Banks\NordNet\Validation\NordNetValidator.cs" />
     <Compile Include="Interfaces\IStockLogic.cs" />
     <Compile Include="Interfaces\ILoginFactory.cs" />
     <Compile Include="Backend\BankProxy.cs" />
     <Compile Include="Backend\Login\LoginFactory.cs" />
-    <Compile Include="Backend\Models\Aktie.cs" />
+    <Compile Include="Banks\NordNet\NordNetModels\NordNetInfoModels.cs" />
     <Compile Include="Backend\Models\LoginModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

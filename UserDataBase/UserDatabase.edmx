@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="UserDatabase.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="UserDatabaseTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="UserDatabase" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="UserDatabaseContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserSet" EntityType="UserDatabase.User" />
+          <EntitySet Name="StockSet" EntityType="UserDatabase.Stock" />
+          <EntitySet Name="FolderSet" EntityType="UserDatabase.Folder" />
+          <AssociationSet Name="FolderUser" Association="UserDatabase.FolderUser">
+            <End Role="Folder" EntitySet="FolderSet" />
+            <End Role="User" EntitySet="UserSet" />
+          </AssociationSet>
+          <AssociationSet Name="FolderUserStock" Association="UserDatabase.FolderUserStock">
+            <End Role="Folder" EntitySet="FolderSet" />
+            <End Role="UserStock" EntitySet="StockSet" />
+          </AssociationSet>
+          <EntitySet Name="HistorySet" EntityType="UserDatabase.History" />
+          <AssociationSet Name="UserHistory" Association="UserDatabase.UserHistory">
+            <End Role="User" EntitySet="UserSet" />
+            <End Role="History" EntitySet="HistorySet" />
+          </AssociationSet>
+          <AssociationSet Name="HistoryFolderHistory" Association="UserDatabase.HistoryFolderHistory">
+            <End Role="History" EntitySet="HistorySet" />
+            <End Role="FolderHistory" EntitySet="FolderSet" />
+          </AssociationSet>
+          <AssociationSet Name="FolderHistoryHistoryStock" Association="UserDatabase.FolderHistoryHistoryStock">
+            <End Role="FolderHistory" EntitySet="FolderSet" />
+            <End Role="HistoryStock" EntitySet="StockSet" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" />
+          <Property Name="Property2" Type="String" Nullable="false" />
+          <NavigationProperty Name="Folder" Relationship="UserDatabase.FolderUser" FromRole="User" ToRole="Folder" />
+          <NavigationProperty Name="History" Relationship="UserDatabase.UserHistory" FromRole="User" ToRole="History" />
+        </EntityType>
+        <EntityType Name="UserStock" BaseType="UserDatabase.Stock">
+          <Property Name="Investment" Type="String" Nullable="false" />
+          <Property Name="LastestUpdate" Type="String" Nullable="false" />
+          <Property Name="Value" Type="String" Nullable="false" />
+          <NavigationProperty Name="Folder" Relationship="UserDatabase.FolderUserStock" FromRole="UserStock" ToRole="Folder" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ask" Type="String" Nullable="false" />
+          <Property Name="Bid" Type="String" Nullable="false" />
+          <Property Name="StockName" Type="String" Nullable="false" />
+          <Property Name="Ticker" Type="String" Nullable="false" />
+          <Property Name="Change" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Folder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="UserDatabase.FolderUser" FromRole="Folder" ToRole="User" />
+          <NavigationProperty Name="UserStock" Relationship="UserDatabase.FolderUserStock" FromRole="Folder" ToRole="UserStock" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Value" Type="String" Nullable="false" />
+          <Property Name="Invested" Type="String" Nullable="false" />
+          <Property Name="Change" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="FolderUser">
+          <End Type="UserDatabase.Folder" Role="Folder" Multiplicity="*" />
+          <End Type="UserDatabase.User" Role="User" Multiplicity="1" />
+        </Association>
+        <Association Name="FolderUserStock">
+          <End Type="UserDatabase.Folder" Role="Folder" Multiplicity="1" />
+          <End Type="UserDatabase.UserStock" Role="UserStock" Multiplicity="*" />
+        </Association>
+        <EntityType Name="History">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="UserDatabase.UserHistory" FromRole="History" ToRole="User" />
+          <NavigationProperty Name="FolderHistory" Relationship="UserDatabase.HistoryFolderHistory" FromRole="History" ToRole="FolderHistory" />
+          <Property Name="Date" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="UserHistory">
+          <End Type="UserDatabase.User" Role="User" Multiplicity="1" />
+          <End Type="UserDatabase.History" Role="History" Multiplicity="*" />
+        </Association>
+        <EntityType Name="FolderHistory" BaseType="UserDatabase.Folder" >
+          <NavigationProperty Name="History" Relationship="UserDatabase.HistoryFolderHistory" FromRole="FolderHistory" ToRole="History" />
+          <NavigationProperty Name="HistoryStock" Relationship="UserDatabase.FolderHistoryHistoryStock" FromRole="FolderHistory" ToRole="HistoryStock" />
+          <Property Name="Date" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="HistoryFolderHistory">
+          <End Type="UserDatabase.History" Role="History" Multiplicity="1" />
+          <End Type="UserDatabase.FolderHistory" Role="FolderHistory" Multiplicity="*" />
+        </Association>
+        <EntityType Name="HistoryStock" BaseType="UserDatabase.UserStock" >
+          <NavigationProperty Name="FolderHistory" Relationship="UserDatabase.FolderHistoryHistoryStock" FromRole="HistoryStock" ToRole="FolderHistory" />
+          <Property Name="Date" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="FolderHistoryHistoryStock">
+          <End Type="UserDatabase.FolderHistory" Role="FolderHistory" Multiplicity="1" />
+          <End Type="UserDatabase.HistoryStock" Role="HistoryStock" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="UserDatabase" />
+        <Alias Key="Target" Value="UserDatabase.Store" />
+        <EntityContainerMapping CdmEntityContainer="UserDatabaseContainer" StorageEntityContainer="UserDatabaseTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

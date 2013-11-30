@@ -1,11 +1,11 @@
-﻿using NordnetPoC.NordNet.Models;
+﻿using NordnetPoC.BackEnd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NordnetPoC.NordNet
+namespace NordnetPoC.BackEnd
 {
     public class BankProxy
     {
@@ -16,7 +16,7 @@ namespace NordnetPoC.NordNet
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static LoginModel Porxy<T>(string username, string password) where T:new()
+        public static LoginProvider Porxy<T>(string username, string password) where T:new()
         {
             return Proxy<T>(username, password, null);
         }
@@ -28,13 +28,13 @@ namespace NordnetPoC.NordNet
         /// <param name="password"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static LoginModel Proxy<T>(string username, string password, string key) where T : new ()
+        public static LoginProvider Proxy<T>(string username, string password, string key) where T : new ()
         {
-            LoginModel loginmodel;
+            LoginProvider loginmodel;
             if(string.IsNullOrEmpty(key))
-                loginmodel=(LoginModel)Activator.CreateInstance(typeof(T), new object[] { username, password});
+                loginmodel=(LoginProvider)Activator.CreateInstance(typeof(T), new object[] { username, password});
             else
-                loginmodel = (LoginModel)Activator.CreateInstance(typeof(T), new object[] { username, password,key});
+                loginmodel = (LoginProvider)Activator.CreateInstance(typeof(T), new object[] { username, password,key});
             return loginmodel.PerformLogin();
         }
     }

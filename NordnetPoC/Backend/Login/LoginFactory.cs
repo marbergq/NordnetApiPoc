@@ -1,5 +1,5 @@
-﻿using NordnetPoC.Interfaces;
-using NordnetPoC.NordNet.Models;
+﻿using NordnetPoC.BackEnd;
+using NordnetPoC.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace NordnetPoC.NordNet.Login
             switch (bank)
             {
                 case LoginProviders.NordnetDirekt:
-                    return new NordNet.Models.NordNetCustomer(BankProxy.Proxy<NordnetPoC.Banks.NordNet.NordNetLogin>(username,password,key));
+                    return new NordnetPoC.Banks.NordNet.NordNetModels.NordNetCustomer(BankProxy.Proxy<NordnetPoC.Banks.NordNet.NordNetLogin>(username,password,key));
                 //more to come
             }
             throw new Exception();
@@ -28,15 +28,7 @@ namespace NordnetPoC.NordNet.Login
             return CreateLogin(username, password, null, bank);
         }
 
-        //private LoginModel NordNetproxy(string username, string password, string key)
-        //{
 
-        //}
-
-        //private async Task<LoginModel> NordNetLogin(string username, string password, string key)
-        //{
-            
-        //}
 
     }
     public class LoginErrorException : Exception
