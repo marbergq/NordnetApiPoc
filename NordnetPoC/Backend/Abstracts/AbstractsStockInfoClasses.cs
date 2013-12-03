@@ -1,4 +1,4 @@
-﻿using NordnetPoC.Interfaces;
+﻿using NordnetPoC.Backend.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +34,7 @@ namespace NordnetPoC.Backend.Abstracts
                 _TodayChange = value;
             }
         }
-        public IEnumerable<StockLink> EnteryValue { get; set; }
+        public IEnumerable<IStockLink> EnteryValue { get; set; }
         public string PossibleDepthable { get; set; }
         public string StartTotalValue { get; set; }
         public string CurrentMarketValue { get; set; }

@@ -1,0 +1,82 @@
+﻿@model NordnetPoC.Backend.Interfaces.ICustomer
+
+@{
+    ViewBag.Title = "UserInfo";
+}
+
+<h2>UserInfo</h2>
+
+<fieldset>
+    <legend>ICustomer</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.LastUpdate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LastUpdate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Credits)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Credits)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.InvestedCapital)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.InvestedCapital)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TodaysChange)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TodaysChange)
+    </div>
+    <table>
+            <tr>
+                <th>
+                    Aktie
+                </th>
+                <th>
+                    Senast
+                </th>
+                <th>
+                    Dagens ändring (Sek)
+                </th>
+                <th>
+                    Ändring i procent 
+                </th>
+            </tr>
+        
+        @foreach (var stock in Model.Stocks)
+        {
+           <tr>
+               <td>
+                   @foreach(var InfoLink in stock.InfoLink)
+                   {
+                       @Html.DisplayFor(model=>InfoLink.Value)
+                   }
+               </td>
+               <td>
+                   @Html.DisplayFor(model=>stock.LatestPrice)
+               </td>
+               <td>
+                   @Html.DisplayFor(model=>stock.ToDayChange) @Html.DisplayFor(model=>stock.Currency)
+               </td>
+               <td>
+                   @Html.DisplayFor(model=>stock.ValueChangePercent) %
+               </td>
+           </tr>
+
+        }
+        
+    </table>
+
+
+
+</fieldset>
+

@@ -1,4 +1,5 @@
-﻿using NordnetPoC.Backend.Validator;
+﻿using NordnetPoC.Backend.Exceptions;
+using NordnetPoC.Backend.Validator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NordnetPoC.BackEnd.Models
 {
-    public abstract class LoginProvider
+    public abstract class LoginProvider : IDisposable
     {
         protected string username, password, key;
         
@@ -41,6 +42,11 @@ namespace NordnetPoC.BackEnd.Models
         private IEnumerable<KeyValuePair<string, string>> _loginParamters { get; set; }
         protected IEnumerable<KeyValuePair<string, string>> LoginParamters { set { _loginParamters = value; } }
         
+
+        /// <summary>
+        /// Highlevel login 
+        /// </summary>
+        /// <returns></returns>
         public LoginProvider PerformLogin()
         {
            _loginParamters= GenerateLoginParamters();
@@ -55,7 +61,7 @@ namespace NordnetPoC.BackEnd.Models
 
             if (!Validator.ValidateLogin(responseContent))
             {
-                throw new NordnetPoC.NordNet.Login.LoginErrorException();
+                throw new LoginErrorException();
             }
 
             LoginPageResult = responseContent;
@@ -65,5 +71,16 @@ namespace NordnetPoC.BackEnd.Models
         }
 
         protected abstract IEnumerable<KeyValuePair<string, string>> GenerateLoginParamters();
+
+        public void Dispose()
+        {
+            try
+            {
+                if (Client != null)
+                    Client.Dispose(); 
+            }
+            catch
+            { }
+        }
     }
 }

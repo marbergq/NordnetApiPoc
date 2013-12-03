@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NordNetApiPoC", "NordNetApi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserDataBase", "UserDataBase\UserDataBase.csproj", "{B851BD20-6194-4B22-AA3B-87E73B80F2EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialStockMarket", "SocialStockMarket\SocialStockMarket.csproj", "{1E9333D0-8504-4D94-A47E-B55044A9817F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialStockMarket.Tests", "SocialStockMarket.Tests\SocialStockMarket.Tests.csproj", "{E1A78E29-8912-42C5-8064-3138857197D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{B851BD20-6194-4B22-AA3B-87E73B80F2EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B851BD20-6194-4B22-AA3B-87E73B80F2EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B851BD20-6194-4B22-AA3B-87E73B80F2EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E9333D0-8504-4D94-A47E-B55044A9817F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E9333D0-8504-4D94-A47E-B55044A9817F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E9333D0-8504-4D94-A47E-B55044A9817F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E9333D0-8504-4D94-A47E-B55044A9817F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1A78E29-8912-42C5-8064-3138857197D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1A78E29-8912-42C5-8064-3138857197D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1A78E29-8912-42C5-8064-3138857197D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1A78E29-8912-42C5-8064-3138857197D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,5 @@
 ﻿using NordnetPoC.BackEnd;
-using NordnetPoC.Interfaces;
+using NordnetPoC.Backend.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +7,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NordnetPoC.NordNet.Login
+namespace NordnetPoC.Backend.Login
 {
-    class LoginFactory : ILoginFactory
+    public class LoginFactory : ILoginFactory
     {
        
         public ICustomer CreateLogin(string username, string password, string key,LoginProviders bank)
@@ -30,16 +30,11 @@ namespace NordnetPoC.NordNet.Login
 
 
 
-    }
-    public class LoginErrorException : Exception
-    {
 
-        public override string Message
+        public ICustomer CreateLogin(Models.ILoginViewModel model)
         {
-            get
-            {
-                return "Access denied with those Criedentals";
-            }
+            return CreateLogin(model.UserName, model.Password,model.Key, model.Bank);
         }
     }
+   
 }

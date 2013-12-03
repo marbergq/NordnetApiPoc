@@ -1,6 +1,7 @@
-﻿using NordnetPoC.Backend.Validator;
+﻿using NordnetPoC.Backend.Exceptions;
+using NordnetPoC.Backend.Validator;
 using NordnetPoC.BackEnd.Models;
-using NordnetPoC.Interfaces;
+using NordnetPoC.Backend.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,19 @@ namespace NordnetPoC.Backend.Abstracts
         /// <summary>
         /// All stocks owned
         /// </summary>
-        public IEnumerable<AbstractStock> Stocks { get; protected set; }
+        public IEnumerable<AbstractStock> _stocks { get; protected set; }
         public abstract IEnumerable<AbstractStock> ParseStocks(string rowForStock);
         public abstract Dictionary<string,string> ParseAccountBalance(string PageToAccountInfo);
         public abstract string ParseTodayChange(string Page);
+
+        /// <summary>
+        /// Parse method that is running upon sucessfull login.
+        /// Excepects result from ParseAccountBalance to hold "invested" and "Capital"
+        /// </summary>
+        /// <param name="page"></param>
         protected void ParseData(string page)
         {
-            Stocks=ParseStocks(page);
+            _stocks=ParseStocks(page);
           TodaysChange=  ParseTodayChange(page);
           var accountbalance = ParseAccountBalance(page);
           _InvestedCapital = accountbalance["invested"];
@@ -74,7 +81,7 @@ namespace NordnetPoC.Backend.Abstracts
             var html = await respons.Content.ReadAsStringAsync();
 
             if (!Validator.ValidateStillLoggedIn(html))
-                throw new NordnetPoC.NordNet.Login.LoginErrorException();
+                throw new LoginErrorException();
             ParseData(html);
             _lastUpdate = DateTime.Now;
         }
@@ -130,9 +137,12 @@ namespace NordnetPoC.Backend.Abstracts
         /// All owned stocks
         /// </summary>
         /// <returns></returns>
-        IEnumerable<IStock> ICustomer.GetStocks()
+        IEnumerable<IStock> ICustomer.Stocks
         {
-            return Stocks;
+            get
+            {
+                return _stocks;
+            }
         }
 
         public DateTime LastUpdate

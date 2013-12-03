@@ -1,7 +1,7 @@
 ﻿using NordnetPoC.Backend.Constants;
 using NordnetPoC.BackEnd.Models;
 using NordnetPoC.Banks.NordNet.Validation;
-using NordnetPoC.NordNet.Login;
+using NordnetPoC.Backend.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
