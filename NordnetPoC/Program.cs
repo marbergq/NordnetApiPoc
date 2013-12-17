@@ -1,6 +1,6 @@
-﻿using NordnetPoC.Banks.NordNet.NordNetModels;
-using NordnetPoC.Interfaces;
-using NordnetPoC.NordNet.Login;
+﻿using NordnetPoC.Backend.Interfaces;
+using NordnetPoC.Backend.Login;
+using NordnetPoC.Banks.NordNet.NordNetModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +28,7 @@ namespace NordnetPoC
             LoginFactory f = new LoginFactory();
             ICustomer customer = f.CreateLogin("ID", "PWD", "KEY", LoginProviders.NordnetDirekt);
 
-            foreach(var aktie in customer.GetStocks())
+            foreach(var aktie in customer.Stocks)
             {
                 Console.WriteLine(aktie.ToString());
                 Console.WriteLine("\n");
@@ -43,7 +43,7 @@ namespace NordnetPoC
             Console.ReadLine();
             Console.WriteLine("Updating...");
             customer.updateData();
-            foreach (var aktie in customer.GetStocks())
+            foreach (var aktie in customer.Stocks)
             {
                 Console.WriteLine(aktie.ToString());
                 Console.WriteLine("\n");

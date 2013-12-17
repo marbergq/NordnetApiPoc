@@ -4,11 +4,223 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="UserDatabase.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="UserDatabaseTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="UserDatabase.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="UserDatabaseStoreContainer">
+    <EntitySet Name="UserSet" EntityType="UserDatabase.Store.UserSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StockSet" EntityType="UserDatabase.Store.StockSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FolderSet" EntityType="UserDatabase.Store.FolderSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HistorySet" EntityType="UserDatabase.Store.HistorySet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StockSet_UserStock" EntityType="UserDatabase.Store.StockSet_UserStock" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FolderSet_FolderHistory" EntityType="UserDatabase.Store.FolderSet_FolderHistory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StockSet_HistoryStock" EntityType="UserDatabase.Store.StockSet_HistoryStock" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FolderUser" Association="UserDatabase.Store.FolderUser">
+      <End Role="Folder" EntitySet="FolderSet" />
+      <End Role="User" EntitySet="UserSet" />
+    </AssociationSet>
+    <AssociationSet Name="FolderUserStock" Association="UserDatabase.Store.FolderUserStock">
+      <End Role="Folder" EntitySet="FolderSet" />
+      <End Role="UserStock" EntitySet="StockSet_UserStock" />
+    </AssociationSet>
+    <AssociationSet Name="UserHistory" Association="UserDatabase.Store.UserHistory">
+      <End Role="User" EntitySet="UserSet" />
+      <End Role="History" EntitySet="HistorySet" />
+    </AssociationSet>
+    <AssociationSet Name="HistoryFolderHistory" Association="UserDatabase.Store.HistoryFolderHistory">
+      <End Role="History" EntitySet="HistorySet" />
+      <End Role="FolderHistory" EntitySet="FolderSet_FolderHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FolderHistoryHistoryStock" Association="UserDatabase.Store.FolderHistoryHistoryStock">
+      <End Role="FolderHistory" EntitySet="FolderSet_FolderHistory" />
+      <End Role="HistoryStock" EntitySet="StockSet_HistoryStock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserStock_inherits_Stock" Association="UserDatabase.Store.FK_UserStock_inherits_Stock">
+      <End Role="Stock" EntitySet="StockSet" />
+      <End Role="UserStock" EntitySet="StockSet_UserStock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FolderHistory_inherits_Folder" Association="UserDatabase.Store.FK_FolderHistory_inherits_Folder">
+      <End Role="Folder" EntitySet="FolderSet" />
+      <End Role="FolderHistory" EntitySet="FolderSet_FolderHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HistoryStock_inherits_UserStock" Association="UserDatabase.Store.FK_HistoryStock_inherits_UserStock">
+      <End Role="UserStock" EntitySet="StockSet_UserStock" />
+      <End Role="HistoryStock" EntitySet="StockSet_HistoryStock" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserSet">
+    <Key>
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="Name" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Property2" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StockSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ask" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Bid" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StockName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Ticker" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Change" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FolderSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Invested" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Change" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="User_Name" Type="int" Nullable="false" />
+    <Property Name="User_UserId" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HistorySet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="User_Name" Type="int" Nullable="false" />
+    <Property Name="User_UserId" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StockSet_UserStock">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Investment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastestUpdate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Folder_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FolderSet_FolderHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="History_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StockSet_HistoryStock">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="FolderHistory_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FolderUser">
+    <End Role="Folder" Type="UserDatabase.Store.FolderSet" Multiplicity="*" />
+    <End Role="User" Type="UserDatabase.Store.UserSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Name" />
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Folder">
+        <PropertyRef Name="User_Name" />
+        <PropertyRef Name="User_UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FolderUserStock">
+    <End Role="Folder" Type="UserDatabase.Store.FolderSet" Multiplicity="1" />
+    <End Role="UserStock" Type="UserDatabase.Store.StockSet_UserStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Folder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserStock">
+        <PropertyRef Name="Folder_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserHistory">
+    <End Role="User" Type="UserDatabase.Store.UserSet" Multiplicity="1" />
+    <End Role="History" Type="UserDatabase.Store.HistorySet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Name" />
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="History">
+        <PropertyRef Name="User_Name" />
+        <PropertyRef Name="User_UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HistoryFolderHistory">
+    <End Role="History" Type="UserDatabase.Store.HistorySet" Multiplicity="1" />
+    <End Role="FolderHistory" Type="UserDatabase.Store.FolderSet_FolderHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="History">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FolderHistory">
+        <PropertyRef Name="History_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FolderHistoryHistoryStock">
+    <End Role="FolderHistory" Type="UserDatabase.Store.FolderSet_FolderHistory" Multiplicity="1" />
+    <End Role="HistoryStock" Type="UserDatabase.Store.StockSet_HistoryStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FolderHistory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HistoryStock">
+        <PropertyRef Name="FolderHistory_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserStock_inherits_Stock">
+    <End Role="Stock" Type="UserDatabase.Store.StockSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserStock" Type="UserDatabase.Store.StockSet_UserStock" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Stock">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserStock">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FolderHistory_inherits_Folder">
+    <End Role="Folder" Type="UserDatabase.Store.FolderSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="FolderHistory" Type="UserDatabase.Store.FolderSet_FolderHistory" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Folder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FolderHistory">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HistoryStock_inherits_UserStock">
+    <End Role="UserStock" Type="UserDatabase.Store.StockSet_UserStock" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="HistoryStock" Type="UserDatabase.Store.StockSet_HistoryStock" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserStock">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="HistoryStock">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="UserDatabase" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -41,12 +253,14 @@
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Name" />
+            <PropertyRef Name="UserId" />
           </Key>
           <Property Name="Name" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" Nullable="false" />
           <Property Name="Property2" Type="String" Nullable="false" />
           <NavigationProperty Name="Folder" Relationship="UserDatabase.FolderUser" FromRole="User" ToRole="Folder" />
           <NavigationProperty Name="History" Relationship="UserDatabase.UserHistory" FromRole="User" ToRole="History" />
+          <Property Type="String" Name="UserId" Nullable="false" />
         </EntityType>
         <EntityType Name="UserStock" BaseType="UserDatabase.Stock">
           <Property Name="Investment" Type="String" Nullable="false" />
@@ -119,13 +333,113 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="UserDatabase" />
-        <Alias Key="Target" Value="UserDatabase.Store" />
-        <EntityContainerMapping CdmEntityContainer="UserDatabaseContainer" StorageEntityContainer="UserDatabaseTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="UserDatabaseStoreContainer" CdmEntityContainer="UserDatabaseContainer">
+    <EntitySetMapping Name="UserSet">
+      <EntityTypeMapping TypeName="IsTypeOf(UserDatabase.User)">
+        <MappingFragment StoreEntitySet="UserSet">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Property2" ColumnName="Property2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockSet">
+      <EntityTypeMapping TypeName="IsTypeOf(UserDatabase.Stock)">
+        <MappingFragment StoreEntitySet="StockSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Ask" ColumnName="Ask" />
+          <ScalarProperty Name="Bid" ColumnName="Bid" />
+          <ScalarProperty Name="StockName" ColumnName="StockName" />
+          <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+          <ScalarProperty Name="Change" ColumnName="Change" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(UserDatabase.UserStock)">
+        <MappingFragment StoreEntitySet="StockSet_UserStock">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Investment" ColumnName="Investment" />
+          <ScalarProperty Name="LastestUpdate" ColumnName="LastestUpdate" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(UserDatabase.HistoryStock)">
+        <MappingFragment StoreEntitySet="StockSet_HistoryStock">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FolderSet">
+      <EntityTypeMapping TypeName="IsTypeOf(UserDatabase.Folder)">
+        <MappingFragment StoreEntitySet="FolderSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Invested" ColumnName="Invested" />
+          <ScalarProperty Name="Change" ColumnName="Change" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(UserDatabase.FolderHistory)">
+        <MappingFragment StoreEntitySet="FolderSet_FolderHistory">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HistorySet">
+      <EntityTypeMapping TypeName="IsTypeOf(UserDatabase.History)">
+        <MappingFragment StoreEntitySet="HistorySet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FolderUser" TypeName="UserDatabase.FolderUser" StoreEntitySet="FolderSet">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Name" ColumnName="User_Name" />
+        <ScalarProperty Name="UserId" ColumnName="User_UserId" />
+      </EndProperty>
+      <EndProperty Name="Folder">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FolderUserStock" TypeName="UserDatabase.FolderUserStock" StoreEntitySet="StockSet_UserStock">
+      <EndProperty Name="Folder">
+        <ScalarProperty Name="Id" ColumnName="Folder_Id" />
+      </EndProperty>
+      <EndProperty Name="UserStock">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserHistory" TypeName="UserDatabase.UserHistory" StoreEntitySet="HistorySet">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Name" ColumnName="User_Name" />
+        <ScalarProperty Name="UserId" ColumnName="User_UserId" />
+      </EndProperty>
+      <EndProperty Name="History">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HistoryFolderHistory" TypeName="UserDatabase.HistoryFolderHistory" StoreEntitySet="FolderSet_FolderHistory">
+      <EndProperty Name="History">
+        <ScalarProperty Name="Id" ColumnName="History_Id" />
+      </EndProperty>
+      <EndProperty Name="FolderHistory">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FolderHistoryHistoryStock" TypeName="UserDatabase.FolderHistoryHistoryStock" StoreEntitySet="StockSet_HistoryStock">
+      <EndProperty Name="FolderHistory">
+        <ScalarProperty Name="Id" ColumnName="FolderHistory_Id" />
+      </EndProperty>
+      <EndProperty Name="HistoryStock">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">

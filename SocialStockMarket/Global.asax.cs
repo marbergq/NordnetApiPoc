@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SocialStockMarket.DBModels.Context;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -23,6 +25,12 @@ namespace SocialStockMarket
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BankDbContext>());
+            //using (BankDbContext db = new BankDbContext())
+            //{
+            //    db.Database.Initialize(true);
+            //}
+            
         }
     }
 }

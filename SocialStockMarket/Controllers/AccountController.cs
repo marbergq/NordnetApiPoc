@@ -10,6 +10,7 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using SocialStockMarket.Filters;
 using SocialStockMarket.Models;
+using SocialStockMarket.DBModels.Context;
 
 namespace SocialStockMarket.Controllers
 {
@@ -81,6 +82,12 @@ namespace SocialStockMarket.Controllers
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.Login(model.UserName, model.Password);
+                    using (var bankDb = new BankDbContext())
+                    {
+                        bankDb.BankUsers.Add(new DBModels.BankUser { UserName = model.UserName });
+                        bankDb.SaveChanges();
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
                 catch (MembershipCreateUserException e)
@@ -263,6 +270,7 @@ namespace SocialStockMarket.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
+                using(BankDbContext bankdb = new BankDbContext())
                 using (UsersContext db = new UsersContext())
                 {
                     UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == model.UserName.ToLower());
@@ -271,6 +279,8 @@ namespace SocialStockMarket.Controllers
                     {
                         // Insert name into the profile table
                         db.UserProfiles.Add(new UserProfile { UserName = model.UserName });
+                        bankdb.BankUsers.Add(new DBModels.BankUser { UserName = model.UserName });
+                        bankdb.SaveChanges();
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);

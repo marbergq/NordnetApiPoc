@@ -31,27 +31,5 @@ namespace SocialStockMarket.Controllers
 
             return View();
         }
-
-        [HttpPost]
-        public ActionResult BankLoginin(BankLoginModel model)
-        {
-            if (!ModelState.IsValid)
-                return View("BankLogin");
-            var customer = f.CreateLogin(model.UserName, model.Password, model.Key, model.Bank);
-            return View("UserInfo", customer);
-        }
-
-        [HttpGet]
-        public ActionResult BankLogin()
-        {
-
-
-
-            return View(new BankLoginModel());
-
-        }
-
-
-
     }
 }

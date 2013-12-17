@@ -182,7 +182,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BankController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DBModels\BankUser.cs" />
+    <Compile Include="DBModels\Context\BankDbContext.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -302,8 +305,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Home\BankLogin.cshtml" />
-    <Content Include="Views\Home\UserInfo.cshtml" />
+    <Content Include="Views\Bank\BankLogin.cshtml" />
+    <Content Include="Views\Bank\UserInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -315,6 +318,10 @@
     <ProjectReference Include="..\NordnetPoC\NordnetPoC.csproj">
       <Project>{9fab51cf-4f43-4aa3-8489-66217c159f0e}</Project>
       <Name>NordnetPoC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserDataBase\UserDataBase.csproj">
+      <Project>{b851bd20-6194-4b22-aa3b-87e73b80f2ec}</Project>
+      <Name>UserDataBase</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
